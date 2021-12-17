@@ -39,11 +39,10 @@ class Grid:
 
             if valid(self.model, val, (row,col)) and self.solve():
                 return True
-            else:
-                self.cubes[row][col].set(0)
-                self.cubes[row][col].set_temp(0)
-                self.update_model()
-                return False
+            self.cubes[row][col].set(0)
+            self.cubes[row][col].set_temp(0)
+            self.update_model()
+            return False
 
     def sketch(self, val):
         row, col = self.selected
@@ -170,7 +169,7 @@ class Cube:
         if self.temp != 0 and self.value == 0:
             text = fnt.render(str(self.temp), 1, (128,128,128))
             win.blit(text, (x+5, y+5))
-        elif not(self.value == 0):
+        elif self.value != 0:
             text = fnt.render(str(self.value), 1, (0, 0, 0))
             win.blit(text, (x + (gap/2 - text.get_width()/2), y + (gap/2 - text.get_height()/2)))
 
@@ -250,8 +249,7 @@ def format_time(secs):
     minute = secs//60
     hour = minute//60
 
-    mat = " " + str(minute) + ":" + str(sec)
-    return mat
+    return " " + str(minute) + ":" + str(sec)
 
 
 def main():
